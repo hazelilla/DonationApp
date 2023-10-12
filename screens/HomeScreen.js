@@ -18,6 +18,7 @@ import Search from "../components/Search";
 import Tab from "../components/Tab";
 import { updateSelectedCategoryId } from "../redux/reducers/CategoriesSlice";
 import { updateSelectedDonationId } from "../redux/reducers/DonationsSlice";
+import { logOut } from "../api/User";
 
 const HomeScreen = ({ navigation }) => {
 
@@ -27,8 +28,6 @@ const HomeScreen = ({ navigation }) => {
     const donations = useSelector(state => state.donations);
 
     const [donationItems, setDonationItems] = useState([]);
-
-    
 
     useEffect(() => {
         const items = donations.items.filter(
@@ -49,7 +48,21 @@ const HomeScreen = ({ navigation }) => {
                         </View>
                     </View>
 
-                    <Image source={{ uri: user.profileImage }} style={styles.profileImage} resizeMode={'contain'} />
+                    <View>
+                        <Image
+                            source={{ uri: user.profileImage }}
+                            style={styles.profileImage}
+                            resizeMode={'contain'}
+                        />
+
+                        <Pressable onPress={async () =>{ 
+                            dispatch(resetToInitialState())
+                            await logOut();
+                        }
+                        }>
+                            <Header type={3} title={"Logout"} color={"#156CF7"}/>
+                        </Pressable>
+                    </View>
                 </View>
 
                 <View style={styles.searchBox}>

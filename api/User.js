@@ -32,3 +32,7 @@ export const loginUser = async (email, password) => {
         return {status: false, error: error.message};
     }
 };
+
+export const logOut = async () => {
+    await auth().signOut();
+};
